@@ -1,0 +1,20 @@
+{
+    "name": "chat-frontend",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "webpack serve --config webpack.dev.js",
+        "build": "webpack --config webpack.prod.js"
+    },
+    "devDependencies": {
+        "css-loader": "^7.1.2",
+        "dotenv-webpack": "^8.1.0",
+        "html-webpack-plugin": "^5.6.3",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.0.4",
+        "webpack-merge": "^6.0.1"
+    }
+}

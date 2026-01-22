@@ -1,0 +1,13 @@
+# Домашнее задание модуля "Расширенный инструментарий JawaScript в браузере"
+
+## Тема: WebSocket and EventSourse
+
+### HelpDesk (frontend + backend)
+
+Реализация фронтенда для корпоративного чата
+
+![Deploy](https://github.com/SadliyVI/JSExtraWeb_HW_EventSourse/actions/workflows/deploy.yml/badge.svg)
+
+### 🚀 Демо-онлайн
+
+[Live demo](https://sadliyvi.github.io/JSExtraWeb_HW_EventSourse/)
