@@ -51,3 +51,12 @@ wss.on("connection", (ws) => {
 server.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });
+
+server.on("upgrade", (req, socket) => {
+    console.log("HTTP upgrade request:", req.url, req.headers["sec-websocket-key"] ? "ws" : "not-ws");
+});
+
+wss.on("connection", (ws, req) => {
+    console.log("WS connected from:", req.headers["x-forwarded-for"] || req.socket.remoteAddress);
+    ws.send(JSON.stringify(users));
+});
