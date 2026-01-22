@@ -4,7 +4,7 @@
 
 ### HelpDesk (frontend + backend)
 
-Реализация фронтенда для корпоративного чата
+Реализация фронтенда и бэкэнда для корпоративного чата
 
 ![Deploy](https://github.com/SadliyVI/JSExtraWeb_HW_EventSourse/actions/workflows/deploy.yml/badge.svg)
 
