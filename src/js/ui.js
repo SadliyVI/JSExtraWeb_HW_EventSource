@@ -48,8 +48,12 @@ export function renderAuthModal({ onSubmit }) {
 
     return {
         el: backdrop,
-        focus() { input.focus(); },
-        destroy() { backdrop.remove(); }
+        focus() {
+            input.focus();
+        },
+        destroy() {
+            backdrop.remove();
+        },
     };
 }
 
@@ -59,7 +63,13 @@ export function renderChatLayout() {
     root.innerHTML = `
     <aside class="users"></aside>
     <section class="messages">
+      <div class="conn">
+        <div class="status" aria-live="polite">Подключение…</div>
+        <button class="reconnect" type="button" hidden>Переподключиться</button>
+      </div>
+
       <div class="list"></div>
+
       <div class="composer">
         <form>
           <input type="text" placeholder="Type your message here" autocomplete="off" />
@@ -72,9 +82,12 @@ export function renderChatLayout() {
     return {
         root,
         usersEl: root.querySelector(".users"),
+        statusEl: root.querySelector(".status"),
+        reconnectBtn: root.querySelector(".reconnect"),
         listEl: root.querySelector(".list"),
         form: root.querySelector("form"),
-        input: root.querySelector("input")
+        input: root.querySelector("input"),
+        button: root.querySelector("button[type='submit']"),
     };
 }
 
@@ -95,13 +108,15 @@ export function renderUsers(usersEl, users, me) {
 
 export function appendMessage(listEl, msg, me) {
     const isMe = me && msg?.user?.id === me.id;
-    const who = isMe ? "You" : (msg?.user?.name ?? "Unknown");
+    const who = isMe ? "You" : msg?.user?.name ?? "Unknown";
 
     const wrap = document.createElement("div");
     wrap.className = `msg ${isMe ? "right" : "left"}`;
 
     wrap.innerHTML = `
-    <div class="meta"><span class="who">${escapeHtml(who)}</span>, ${escapeHtml(formatDateTime(new Date()))}</div>
+    <div class="meta"><span class="who">${escapeHtml(who)}</span>, ${escapeHtml(
+        formatDateTime(new Date())
+    )}</div>
     <div class="text">${escapeHtml(msg?.message ?? "")}</div>
   `;
 
@@ -111,7 +126,9 @@ export function appendMessage(listEl, msg, me) {
 
 function formatDateTime(d) {
     const pad = (n) => String(n).padStart(2, "0");
-    return `${pad(d.getHours())}:${pad(d.getMinutes())} ${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
+    return `${pad(d.getHours())}:${pad(d.getMinutes())} ${pad(d.getDate())}.${pad(
+        d.getMonth() + 1
+    )}.${d.getFullYear()}`;
 }
 
 function escapeHtml(s) {

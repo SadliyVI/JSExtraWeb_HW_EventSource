@@ -19,10 +19,17 @@ export class ChatSocket {
     }
 
     connect() {
+        try {
+            if (this.ws && this.ws.readyState !== WebSocket.CLOSED) {
+                this.ws.close();
+            }
+        } catch {
+        }
+
         this.ws = new WebSocket(makeWsUrl());
 
-        this.ws.addEventListener("open", () => this.onOpen?.());
-        this.ws.addEventListener("close", () => this.onClose?.());
+        this.ws.addEventListener("open", (e) => this.onOpen?.(e));
+        this.ws.addEventListener("close", (e) => this.onClose?.(e));
         this.ws.addEventListener("error", (e) => this.onError?.(e));
         this.ws.addEventListener("message", (e) => this.#handleIncoming(e.data));
     }
@@ -45,11 +52,17 @@ export class ChatSocket {
         }
     }
 
+    // Безопасная отправка: не падает если ws ещё не OPEN
     send(payload) {
-        this.ws?.send(JSON.stringify(payload));
+        if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return false;
+        this.ws.send(JSON.stringify(payload));
+        return true;
     }
 
     close() {
-        this.ws?.close();
+        try {
+            this.ws?.close();
+        } catch {
+        }
     }
 }
