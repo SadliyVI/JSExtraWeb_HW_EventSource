@@ -4,7 +4,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "start": "webpack serve --config webpack.dev.js",
+        "start:frontend": "webpack serve --config webpack.dev.js",
+        "start:backend": "npm --prefix backend start",
+        "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
         "build": "webpack --config webpack.prod.js"
     },
     "devDependencies": {
